@@ -178,6 +178,7 @@
     [_wrappedController viewDidDisappear:animated];
 }
 
+#ifdef __IPHONE_6_0
 - (BOOL)shouldAutorotate {
     return [self.wrappedController shouldAutorotate];
 }
@@ -185,6 +186,7 @@
 - (NSUInteger)supportedInterfaceOrientations {
     return [self.wrappedController supportedInterfaceOrientations];
 }
+#endif
 
 - (BOOL)automaticallyForwardAppearanceAndRotationMethodsToChildViewControllers {
     return NO;
