@@ -854,6 +854,8 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
     [self.centerController viewWillAppear:animated];
     [self transitionAppearanceFrom:0 to:1 animated:animated];
     _viewAppeared = 1;
+
+    self.centerView.clipsToBounds = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
