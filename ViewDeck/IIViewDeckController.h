@@ -100,6 +100,9 @@ extern IIViewDeckOffsetOrientation IIViewDeckOffsetOrientationFromIIViewDeckSide
     BOOL _preRotationIsLandscape;
     IIViewDeckOffsetOrientation _offsetOrientation;
     UIInterfaceOrientation _willAppearShouldArrangeViewsAfterRotation;
+#ifdef __IPHONE_7_0
+    UIView *_statusBarCoveringView;
+#endif
 }
 
 typedef void (^IIViewDeckControllerBlock) (IIViewDeckController *controller, BOOL success);
