@@ -281,6 +281,9 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
 
 - (id)initWithCenterViewController:(UIViewController*)centerController {
     if ((self = [super initWithNibName:nil bundle:nil])) {
+#ifdef __IPHONE_7_0
+        _darkensStatusBar = YES;
+#endif
         _elastic = YES;
         _willAppearShouldArrangeViewsAfterRotation = (UIInterfaceOrientation)UIDeviceOrientationUnknown;
         _panningMode = IIViewDeckFullViewPanning;
@@ -540,13 +543,18 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
     self.slidingControllerView.frame = [self slidingRectForOffset:_offset forOrientation:orientation];
 #ifdef __IPHONE_7_0
     if (orientation == IIViewDeckHorizontalOrientation) {
-        CGFloat max = self.referenceBounds.size.width - _maxLedge;
-        CGFloat percent = max > 0.0f ? offset / max : 0.0f;
-        if (percent < 0.0f) {
-            percent = -percent;
-        }
-        if (percent > 1.0f) {
-            percent = 1.0f;
+        CGFloat percent;
+        if (self.darkensStatusBar) {
+            CGFloat max = self.referenceBounds.size.width - _maxLedge;
+            CGFloat percent = max > 0.0f ? offset / max : 0.0f;
+            if (percent < 0.0f) {
+                percent = -percent;
+            }
+            if (percent > 1.0f) {
+                percent = 1.0f;
+            }
+        } else {
+            percent = 0.0f;
         }
         self.statusBarCoveringView.alpha = percent;
     }
