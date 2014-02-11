@@ -546,7 +546,7 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
         CGFloat percent;
         if (self.darkensStatusBar) {
             CGFloat max = self.referenceBounds.size.width - _maxLedge;
-            CGFloat percent = max > 0.0f ? offset / max : 0.0f;
+            percent = max > 0.0f ? offset / max : 0.0f;
             if (percent < 0.0f) {
                 percent = -percent;
             }
