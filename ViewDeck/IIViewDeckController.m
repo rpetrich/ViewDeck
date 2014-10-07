@@ -544,7 +544,7 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
 #ifdef __IPHONE_7_0
     if (orientation == IIViewDeckHorizontalOrientation) {
         CGFloat percent;
-        if (self.darkensStatusBar) {
+        if (self.darkensStatusBar && (kCFCoreFoundationVersionNumber < 1129.15 || UIInterfaceOrientationIsPortrait(self.interfaceOrientation))) {
             CGFloat max = self.referenceBounds.size.width - _maxLedge;
             percent = max > 0.0f ? offset / max : 0.0f;
             if (percent < 0.0f) {
@@ -557,6 +557,9 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
             percent = 0.0f;
         }
         self.statusBarCoveringView.alpha = percent;
+        CGRect bounds = self.view.bounds;
+        bounds.size.height = [self statusBarHeight];
+        self.statusBarCoveringView.frame = bounds;
     }
 #endif
     if (beforeOffset != _offset)
@@ -803,6 +806,7 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
         self.statusBarCoveringView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         CGRect bounds = self.view.bounds;
         bounds.size.height = [self statusBarHeight];
+        self.statusBarCoveringView.userInteractionEnabled = NO;
         self.statusBarCoveringView.frame = bounds;
         self.statusBarCoveringView.backgroundColor = [UIColor blackColor];
         self.statusBarCoveringView.opaque = YES;
